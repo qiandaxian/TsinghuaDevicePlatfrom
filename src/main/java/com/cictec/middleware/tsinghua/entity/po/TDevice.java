@@ -31,17 +31,16 @@ public class TDevice {
 
     /**
      * 设备在线状态
-0：断开
-1：在线
+        0：断开
+        1：在线
      */
     @Column(name = "dev_online_status")
     private String devOnlineStatus;
 
     /**
      * 设备状态
-1：正常
-0：维修
-
+        1：正常
+        0：维修
      */
     @Column(name = "dev_status")
     private String devStatus;
