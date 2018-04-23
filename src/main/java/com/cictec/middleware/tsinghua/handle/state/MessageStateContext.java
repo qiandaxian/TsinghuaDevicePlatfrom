@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author qiandaxian
- * messageState上下文，用于自动获取执行handle
+ * messageState上下文，用于自动调用该类型的handle
  */
 @Component
 public class MessageStateContext implements ApplicationContextAware {
@@ -21,18 +21,25 @@ public class MessageStateContext implements ApplicationContextAware {
     private ApplicationContext context;
     private MessageState messageState;
 
-    public void messageHandle(TsinghuaDeviceMessageDTO messageDTO){
-        this.setMessageState(messageDTO);
-        messageState.messageHandle(messageDTO);
-    }
-
-    public void setMessageState(TsinghuaDeviceMessageDTO messageDTO){
-        this.messageState = (MessageState)context.getBean(messageDTO.getType());
-    }
-
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.context = applicationContext;
     }
+    public void messageHandle(TsinghuaDeviceMessageDTO messageDTO,byte[] bytes) {
+        this.setMessageState(messageDTO);
+        messageState.messageHandle(bytes);
+
+
+    }
+
+    public void setMessageState(TsinghuaDeviceMessageDTO messageDTO){
+        try {
+            this.messageState = (MessageState)context.getBean(messageDTO.getHexMsgId());
+        }catch (Exception e){
+            logger.error("未发现【{}】类型消息的逻辑处理模块。",messageDTO.getHexMsgId());
+        }
+    }
+
+
+
 }

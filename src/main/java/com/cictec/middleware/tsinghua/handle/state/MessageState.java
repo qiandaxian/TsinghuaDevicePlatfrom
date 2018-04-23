@@ -10,7 +10,7 @@ import com.cictec.middleware.tsinghua.entity.dto.TsinghuaDeviceMessageDTO;
 public interface MessageState {
     /**
      * 消息的处理方法
-     * @param messageDTO
+     * @param bytes
      */
-    void messageHandle(TsinghuaDeviceMessageDTO messageDTO);
+    void messageHandle(byte[] bytes);
 }

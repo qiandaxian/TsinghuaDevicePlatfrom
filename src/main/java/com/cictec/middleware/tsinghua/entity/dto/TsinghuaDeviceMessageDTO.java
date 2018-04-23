@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class TsinghuaDeviceMessageDTO {
-    private String type;
-    private String data;
+    private String hexMsgId;
+    private String hexDevIdno;
+    private String hexFlowNo;
 }
