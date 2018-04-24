@@ -16,8 +16,8 @@ import static com.cictec.middleware.tsinghua.config.ProjectConstant.*;
  */
 public class CodeGenerator {
 	//JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:postgresql://127.0.0.1:5432/bmpm";
-    private static final String JDBC_USERNAME = "postgres";
+    private static final String JDBC_URL = "jdbc:postgresql://127.0.0.1:5432/tsinghua_device_platfrom";
+    private static final String JDBC_USERNAME = "qiandaxian";
     private static final String JDBC_PASSWORD = "a1b2c3";
     private static final String JDBC_DIVER_CLASS_NAME = "org.postgresql.Driver";
 
@@ -35,7 +35,7 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-        genCode("t_device");
+        genCode("t_warn","t_warn_media");
     }
 
     public static void genCode(String... tableNames) {

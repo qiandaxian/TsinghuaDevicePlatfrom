@@ -1,5 +1,6 @@
 package com.cictec.middleware.tsinghua.utils.log;
 
+
 import org.apache.log4j.*;
 
 import java.io.File;
@@ -48,7 +49,7 @@ public class MultiLogUtils {
 		return multLog;
 	}
 	
-	public static Logger getLoggerByNameNoTime(String path,String name) {
+	public static Logger getLoggerByNameNoTime(String path, String name) {
 		// 存在则返回现有
 		Logger logger = Logger.getLogger(name);
 		// 清空Appender。特別是不想使用現存实例时一定要初期化

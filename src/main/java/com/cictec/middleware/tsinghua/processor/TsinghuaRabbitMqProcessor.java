@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+
 
 /**
+ * mq消息处理类
  * @author qiandaxian
  */
 @Component
@@ -40,17 +43,25 @@ public class TsinghuaRabbitMqProcessor extends BaseProcessor {
     public void doProcess(Message message) throws Exception {
         byte[] bytes = (byte[]) message.getBody();
 
-        logger.info("收到消息：{}",new String(bytes,"UTF-8"));
+        logger.debug("收到消息：{}",new String(bytes,"UTF-8"));
         TsinghuaDeviceMessageDTO messageDTO = JSONObject.parseObject(bytes,TsinghuaDeviceMessageDTO.class);
+        saveLogToFile(messageDTO,bytes);
+        messageStateContext.messageHandle(messageDTO,bytes);
 
+    }
+
+    /**
+     * 保存接收消息到文件
+     * @param messageDTO
+     * @param bytes
+     * @throws Exception
+     */
+    private void saveLogToFile(TsinghuaDeviceMessageDTO messageDTO,byte[] bytes)throws Exception{
         if(messageSave) {
             String logPath = MultiLogFileNameUtils.getBinaryLogName(DateUtils.getDate(), messageDTO.getHexDevIdno());
             MultiLog log = MultiLogUtils.getMultiLogNotime(messageAddress, logPath, logContent);
             log.debug(new String(bytes, "UTF-8"));
         }
-
-        messageStateContext.messageHandle(messageDTO,bytes);
-
     }
 
 }

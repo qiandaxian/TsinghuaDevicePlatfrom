@@ -22,5 +22,7 @@ public class MediaMessageHandle implements MessageState {
         logger.info("收到设备【{}】多媒体消息，消息内容：{}",mediaMessage.getHexDevIdno(),mediaMessage.toString());
         logger.info("保存媒体信息到数据库，下载文件，保存到服务器");
 
+        //TODO 保存证据信息
+
     }
 }
