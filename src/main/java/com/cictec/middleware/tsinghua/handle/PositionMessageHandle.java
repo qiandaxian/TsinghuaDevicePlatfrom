@@ -8,6 +8,7 @@ import com.cictec.middleware.tsinghua.entity.po.elasticsearch.PositionInfo;
 import com.cictec.middleware.tsinghua.handle.state.MessageState;
 import com.cictec.middleware.tsinghua.processor.VirtualSessionManage;
 import com.cictec.middleware.tsinghua.service.TWarnService;
+import com.cictec.middleware.tsinghua.utils.DateUtils;
 import com.cictec.middleware.tsinghua.utils.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +36,16 @@ public class PositionMessageHandle implements MessageState {
     @Override
     public void messageHandle(byte[] bytes) {
         PositionMessageDTO positionMessage = JSONObject.parseObject(bytes,PositionMessageDTO.class);
-        sessionManage.updatePosition(positionMessage);
         logger.info("收到位置信息消息，消息内容：{}",positionMessage.toString());
 
+        sessionManage.updatePosition(positionMessage);
+
         positionInfoReponsitory.save(converPositionMessageToPositionInfo(positionMessage));
-        logger.info("保存位置信息到ES");
+        logger.debug("保存位置信息到ES");
 
         if(positionMessage.getAlarmSet().length>0) {
             tWarnService.save(getWarnFromPosition(positionMessage));
+            logger.debug("保存报警信息到数据库");
         }
     }
 
@@ -56,12 +59,11 @@ public class PositionMessageHandle implements MessageState {
         warn.setDeviceCode(message.getHexDevIdno());
         warn.setCreateTime(new Date(System.currentTimeMillis()));
         warn.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
+        warn.setWarnTime(DateUtils.parseDateTime(message.getYyMMddHHmmss()));
         //TODO
 //        warn.setWarnContent();
 //        warn.setWarnId();
-//
 //        message.getAlarmSet()[0]
-//
 //        warn.setWarnTime();
 //        warn.setWarnType();
 //        warn.setWarnUuid();
