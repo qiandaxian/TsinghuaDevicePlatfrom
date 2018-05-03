@@ -82,8 +82,6 @@ public class TDeviceServiceImplTest {
 
             TWarnMedia f = new TWarnMedia();
             f.setMediaUuid("test1211");
-            f.setWarnUuid("FFF");
-            f.setMediaUrl("www.FF.com");
             f.setCreateTime(DateUtils.parseDateTime("2018-08-11 11:11:11"));
             tWarnMediaService.save(f);
 
@@ -95,7 +93,6 @@ public class TDeviceServiceImplTest {
 //        String url = "https://qyws123.oss-cn-hangzhou.aliyuncs.com/180101/001709270034_20180101_103436.jpg?Expires=1524876096&OSSAccessKeyId=TMP.AQEm3wh2XJktatOGL_gHdHciseYjTtj5H_yTmWmo4y4-nR8VKpKIHJiLmZrPAAAwLAIUJoq30dozfw4SBrmOPg3SOwWtKFACFEpKAhtZWWXKNY31cXv2QQniuK96&Signature=rZhIfIv5haiEz8dv2fsYdfZeuyg%3D";
         String url="http://qyws123.oss-cn-hangzhou.aliyuncs.com/180418/211712230085_20180418_105011.h264?Expires=1524020418&OSSAccessKeyId=LTAIrw8Otq3F04oo&Signature=Avx3fLxVhcxkFAM9ZZ5zvn0jQB0%3D";
         String savePath = "/Users/qiandaxian/Desktop/22222.h264";
-        DownloadUtils.downloadFile(url,savePath);
 
     }
 }
