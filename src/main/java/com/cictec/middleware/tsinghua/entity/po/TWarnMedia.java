@@ -5,30 +5,16 @@ import javax.persistence.*;
 
 @Table(name = "t_warn_media")
 public class TWarnMedia {
+    public static final int DOWNLOAD_STATUS_SUCCESS = 1;
+    public static final int DOWNLOAD_STATUS_ERROR = 2;
+    public static final int DOWNLOAD_STATUS_UNDOWNLOAD = 0;
+
     /**
      * 报警图片表主键uuid
      */
     @Id
     @Column(name = "media_uuid")
     private String mediaUuid;
-
-    /**
-     * 报警信息uuid
-     */
-    @Column(name = "warn_uuid")
-    private String warnUuid;
-
-    /**
-     * 报警图片名称
-     */
-    @Column(name = "media_name")
-    private String mediaName;
-
-    /**
-     * 报警图片相对路径
-     */
-    @Column(name = "media_url")
-    private String mediaUrl;
 
     /**
      * 报警图片序号
@@ -39,20 +25,17 @@ public class TWarnMedia {
     @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "create_user")
-    private String createUser;
-
-    @Column(name = "save_path")
-    private String savePath;
-
     @Column(name = "download_url")
     private String downloadUrl;
 
     @Column(name = "download_time")
     private Date downloadTime;
 
-    @Column(name = "download_type")
-    private Integer downloadType;
+    /**
+     * 0.未下载1.下载成功2.下载失败
+     */
+    @Column(name = "download_status")
+    private Integer downloadStatus;
 
     @Column(name = "media_encoding")
     private String mediaEncoding;
@@ -62,6 +45,9 @@ public class TWarnMedia {
 
     @Column(name = "hex_localtion_buf")
     private String hexLocaltionBuf;
+
+    @Column(name = "save_type")
+    private String saveType;
 
     /**
      * 获取报警图片表主键uuid
@@ -79,60 +65,6 @@ public class TWarnMedia {
      */
     public void setMediaUuid(String mediaUuid) {
         this.mediaUuid = mediaUuid;
-    }
-
-    /**
-     * 获取报警信息uuid
-     *
-     * @return warn_uuid - 报警信息uuid
-     */
-    public String getWarnUuid() {
-        return warnUuid;
-    }
-
-    /**
-     * 设置报警信息uuid
-     *
-     * @param warnUuid 报警信息uuid
-     */
-    public void setWarnUuid(String warnUuid) {
-        this.warnUuid = warnUuid;
-    }
-
-    /**
-     * 获取报警图片名称
-     *
-     * @return media_name - 报警图片名称
-     */
-    public String getMediaName() {
-        return mediaName;
-    }
-
-    /**
-     * 设置报警图片名称
-     *
-     * @param mediaName 报警图片名称
-     */
-    public void setMediaName(String mediaName) {
-        this.mediaName = mediaName;
-    }
-
-    /**
-     * 获取报警图片相对路径
-     *
-     * @return media_url - 报警图片相对路径
-     */
-    public String getMediaUrl() {
-        return mediaUrl;
-    }
-
-    /**
-     * 设置报警图片相对路径
-     *
-     * @param mediaUrl 报警图片相对路径
-     */
-    public void setMediaUrl(String mediaUrl) {
-        this.mediaUrl = mediaUrl;
     }
 
     /**
@@ -168,34 +100,6 @@ public class TWarnMedia {
     }
 
     /**
-     * @return create_user
-     */
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    /**
-     * @param createUser
-     */
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    /**
-     * @return save_path
-     */
-    public String getSavePath() {
-        return savePath;
-    }
-
-    /**
-     * @param savePath
-     */
-    public void setSavePath(String savePath) {
-        this.savePath = savePath;
-    }
-
-    /**
      * @return download_url
      */
     public String getDownloadUrl() {
@@ -224,17 +128,21 @@ public class TWarnMedia {
     }
 
     /**
-     * @return download_type
+     * 获取0.未下载1.下载成功2.下载失败
+     *
+     * @return download_status - 0.未下载1.下载成功2.下载失败
      */
-    public Integer getDownloadType() {
-        return downloadType;
+    public Integer getDownloadStatus() {
+        return downloadStatus;
     }
 
     /**
-     * @param downloadType
+     * 设置0.未下载1.下载成功2.下载失败
+     *
+     * @param downloadStatus 0.未下载1.下载成功2.下载失败
      */
-    public void setDownloadType(Integer downloadType) {
-        this.downloadType = downloadType;
+    public void setDownloadStatus(Integer downloadStatus) {
+        this.downloadStatus = downloadStatus;
     }
 
     /**
@@ -277,5 +185,19 @@ public class TWarnMedia {
      */
     public void setHexLocaltionBuf(String hexLocaltionBuf) {
         this.hexLocaltionBuf = hexLocaltionBuf;
+    }
+
+    /**
+     * @return save_type
+     */
+    public String getSaveType() {
+        return saveType;
+    }
+
+    /**
+     * @param saveType
+     */
+    public void setSaveType(String saveType) {
+        this.saveType = saveType;
     }
 }

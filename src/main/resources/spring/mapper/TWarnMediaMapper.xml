@@ -6,18 +6,14 @@
       WARNING - @mbg.generated
     -->
     <id column="media_uuid" jdbcType="VARCHAR" property="mediaUuid" />
-    <result column="warn_uuid" jdbcType="VARCHAR" property="warnUuid" />
-    <result column="media_name" jdbcType="VARCHAR" property="mediaName" />
-    <result column="media_url" jdbcType="VARCHAR" property="mediaUrl" />
     <result column="media_type" jdbcType="INTEGER" property="mediaType" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
-    <result column="save_path" jdbcType="VARCHAR" property="savePath" />
     <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
     <result column="download_time" jdbcType="TIMESTAMP" property="downloadTime" />
-    <result column="download_type" jdbcType="INTEGER" property="downloadType" />
+    <result column="download_status" jdbcType="INTEGER" property="downloadStatus" />
     <result column="media_encoding" jdbcType="VARCHAR" property="mediaEncoding" />
     <result column="hex_media_id" jdbcType="VARCHAR" property="hexMediaId" />
     <result column="hex_localtion_buf" jdbcType="VARCHAR" property="hexLocaltionBuf" />
+    <result column="save_type" jdbcType="VARCHAR" property="saveType" />
   </resultMap>
 </mapper>

@@ -9,6 +9,7 @@ import com.cictec.middleware.tsinghua.handle.state.MessageState;
 import com.cictec.middleware.tsinghua.processor.VirtualSessionManage;
 import com.cictec.middleware.tsinghua.service.TWarnService;
 import com.cictec.middleware.tsinghua.utils.DateUtils;
+import com.cictec.middleware.tsinghua.utils.DaxianStringUtils;
 import com.cictec.middleware.tsinghua.utils.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.text.MessageFormat;
 import java.util.Date;
 
 
@@ -59,14 +61,12 @@ public class PositionMessageHandle implements MessageState {
         warn.setDeviceCode(message.getHexDevIdno());
         warn.setCreateTime(new Date(System.currentTimeMillis()));
         warn.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
-        warn.setWarnTime(DateUtils.parseDateTime(message.getYyMMddHHmmss()));
-        //TODO
-//        warn.setWarnContent();
-//        warn.setWarnId();
-//        message.getAlarmSet()[0]
-//        warn.setWarnTime();
-//        warn.setWarnType();
-//        warn.setWarnUuid();
+        warn.setWarnTime(DateUtils.parseDate(message.getYyMMddHHmmss()));
+        warn.setWarnUuid(UUIDGenerator.genUuidStr());
+        String content =  MessageFormat.format("报警类型：{},状态标识：{}",message.getAlarmSet()[0],DaxianStringUtils.join(message.getStatusSet()));
+        warn.setWarnContent(content);
+        //类型后期待定
+        //warn.setWarnType();
         return warn;
     }
 

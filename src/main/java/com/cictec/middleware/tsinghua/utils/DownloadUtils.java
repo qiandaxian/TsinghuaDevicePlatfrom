@@ -1,14 +1,20 @@
 package com.cictec.middleware.tsinghua.utils;
 
+import com.aliyun.oss.OSSClient;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.protocol.HTTP;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
 
 /**
  * @author qiandaxian
@@ -17,27 +23,32 @@ import java.io.IOException;
 public  class DownloadUtils {
 
     /**
-     * 通用的http下载方法。
+     * download file by http url , and save the file by savePath .
+     * when file download error , alibabaOSS server will response a error xml ,
+     * this function will return false and savePath will become savePath.xml .
      * @param url
      * @param savePath
      * @return
      */
-    public static boolean downloadFile(String url,String savePath){
+    public static boolean saveFileLocal(String url,String savePath){
         boolean result = true;
         //下载媒体资源
-        //String url = "http://117.34.118.23:9004/upload/2018/01/18/20180118114947830.mp4";
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url);
         try {
             CloseableHttpResponse response1 = httpclient.execute(httpGet);
             HttpEntity entity1 = response1.getEntity();
             if(entity1.isStreaming()){
-                System.out.println(entity1.getContentType());
-                System.out.println(entity1.getContent());
-                System.out.println(entity1.getContentEncoding());
+                if(!"application/xml".equals(entity1.getContentType())) {
 
+                //媒体信息下载返回xml，说明下载文件可能过期等情况。
+                }else {
+
+                    savePath= savePath+".xml";
+                    result = false;
+                }
                 File file = new File(savePath);
-                if(!file.exists()){
+                if (!file.exists()) {
                     file.createNewFile();
                 }
                 FileOutputStream out = new FileOutputStream(file);
@@ -54,11 +65,39 @@ public  class DownloadUtils {
     }
 
     /**
-     *
+     * alibaba oss client save by http url
+     * @param endpoint
+     * @param accessKeyId
+     * @param accessKeySecret
      * @param url
+     * @param bucketName
+     * @param key
+     * @return
+     * @throws IOException
      */
-    public void sendHttpUrlToAlibabaOSSServer(String url,String keySuffixWithSlash){
-        //TODO
+    public static String saveFileToAlibabaOSS(String endpoint,String accessKeyId,String accessKeySecret,String url,String bucketName,String key,Integer expir) throws IOException {
+        // 创建OSSClient实例
+        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
+        // 上传网络流
+        InputStream inputStream = new URL(url).openStream();
+        ossClient.putObject(bucketName, key, inputStream);
+
+        // 关闭client
+        ossClient.shutdown();
+
+        Date expiration = new Date(System.currentTimeMillis() + (long)expir*24*60*60*1000);
+        URL downloadUrl = ossClient.generatePresignedUrl(bucketName, key, expiration);
+
+        System.out.println(downloadUrl.toString());
+
+        return downloadUrl.toString();
+
+    }
+
+
+    public static void main(String[] args) {
+        String a = "http://tsinghua-device-platfrom.oss-cn-hangzhou.aliyuncs.com/2018-05-03/211712230085/f9a51a424bbc4044aab1.mp4?Expires=1533115934&OSSAccessKeyId=LTAIMMZcBdG4YbJU&Signature=88BkMl1vt1eWCtDjbLDJikolyAU%3D";
+        System.out.println(a.length());
     }
 
 }
