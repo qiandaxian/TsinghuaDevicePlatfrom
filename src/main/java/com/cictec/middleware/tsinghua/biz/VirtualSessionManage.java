@@ -1,6 +1,5 @@
-package com.cictec.middleware.tsinghua.processor;
+package com.cictec.middleware.tsinghua.biz;
 
-import com.cictec.middleware.tsinghua.entity.domain.VirtualSession;
 import com.cictec.middleware.tsinghua.entity.dto.Terminal.PositionMessageDTO;
 import com.cictec.middleware.tsinghua.entity.dto.TsinghuaDeviceMessageDTO;
 import org.slf4j.Logger;

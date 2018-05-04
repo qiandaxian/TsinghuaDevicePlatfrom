@@ -6,13 +6,9 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.protocol.HTTP;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 
@@ -64,32 +60,10 @@ public  class DownloadUtils {
         }
     }
 
-    /**
-     * alibaba oss client save by http url
-     * @param endpoint
-     * @param accessKeyId
-     * @param accessKeySecret
-     * @param url
-     * @param bucketName
-     * @param key
-     * @return
-     * @throws IOException
-     */
-    public static String saveFileToAlibabaOSS(String endpoint,String accessKeyId,String accessKeySecret,String url,String bucketName,String key,Integer expir) throws IOException {
-        // 创建OSSClient实例
-        OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
-        // 上传网络流
-        InputStream inputStream = new URL(url).openStream();
-        ossClient.putObject(bucketName, key, inputStream);
 
-        // 关闭client
-        ossClient.shutdown();
-
+    public static String getAlibabaOSSDownloadUrl( OSSClient ossClient,String url,String bucketName,String key,Integer expir) throws IOException {
         Date expiration = new Date(System.currentTimeMillis() + (long)expir*24*60*60*1000);
         URL downloadUrl = ossClient.generatePresignedUrl(bucketName, key, expiration);
-
-        System.out.println(downloadUrl.toString());
-
         return downloadUrl.toString();
 
     }

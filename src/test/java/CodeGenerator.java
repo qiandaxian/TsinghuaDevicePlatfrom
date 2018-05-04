@@ -35,7 +35,7 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-        genCode("t_warn","t_warn_media");
+        genCode("t_warn_media");
     }
 
     public static void genCode(String... tableNames) {

@@ -18,12 +18,11 @@ import java.io.UnsupportedEncodingException;
 
 
 /**
- * mq消息处理类
+ * 清研设备消息的处理类
  * @author qiandaxian
  */
 @Component
 public class TsinghuaRabbitMqProcessor extends BaseProcessor {
-
 
     @Value("${tcpMessage.save}")
     private boolean messageSave;

@@ -1,8 +1,10 @@
 package com.cictec.middleware.tsinghua.entity.po;
 
+import lombok.ToString;
+
 import java.util.Date;
 import javax.persistence.*;
-
+@ToString
 @Table(name = "t_warn")
 public class TWarn {
     /**

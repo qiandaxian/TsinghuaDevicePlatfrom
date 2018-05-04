@@ -6,7 +6,7 @@ import com.cictec.middleware.tsinghua.entity.dto.Terminal.PositionMessageDTO;
 import com.cictec.middleware.tsinghua.entity.po.TWarn;
 import com.cictec.middleware.tsinghua.entity.po.elasticsearch.PositionInfo;
 import com.cictec.middleware.tsinghua.handle.state.MessageState;
-import com.cictec.middleware.tsinghua.processor.VirtualSessionManage;
+import com.cictec.middleware.tsinghua.biz.VirtualSessionManage;
 import com.cictec.middleware.tsinghua.service.TWarnService;
 import com.cictec.middleware.tsinghua.utils.DateUtils;
 import com.cictec.middleware.tsinghua.utils.DaxianStringUtils;
@@ -39,15 +39,16 @@ public class PositionMessageHandle implements MessageState {
     public void messageHandle(byte[] bytes) {
         PositionMessageDTO positionMessage = JSONObject.parseObject(bytes,PositionMessageDTO.class);
         logger.info("收到位置信息消息，消息内容：{}",positionMessage.toString());
-
         sessionManage.updatePosition(positionMessage);
 
-        positionInfoReponsitory.save(converPositionMessageToPositionInfo(positionMessage));
-        logger.debug("保存位置信息到ES");
+        PositionInfo positionInfo = converPositionMessageToPositionInfo(positionMessage);
+        logger.debug("保存位置信息到ES:{}",positionInfo.toString());
+        positionInfoReponsitory.save(positionInfo);
 
         if(positionMessage.getAlarmSet().length>0) {
-            tWarnService.save(getWarnFromPosition(positionMessage));
-            logger.debug("保存报警信息到数据库");
+            TWarn warn = getWarnFromPosition(positionMessage);
+            logger.debug("保存报警信息到数据库:{}",warn.toString());
+            tWarnService.save(warn);
         }
     }
 

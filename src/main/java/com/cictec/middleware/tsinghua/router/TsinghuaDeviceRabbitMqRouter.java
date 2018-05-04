@@ -11,19 +11,19 @@ public class TsinghuaDeviceRabbitMqRouter extends RouteBuilder {
     @Autowired
     TsinghuaRabbitMqProcessor tsinghuaRabbitMqProcessor;
 
-    @Value("${rabbitmq.host}")
+    @Value("${rabbitmq.tsinghua.host}")
     private String host;
-    @Value("${rabbitmq.port}")
+    @Value("${rabbitmq.tsinghua.port}")
     private String port;
-    @Value("${rabbitmq.exchangename}")
+    @Value("${rabbitmq.tsinghua.exchangename}")
     private String exchangename;
-    @Value("${rabbitmq.username}")
+    @Value("${rabbitmq.tsinghua.username}")
     private String username;
-    @Value("${rabbitmq.password}")
+    @Value("${rabbitmq.tsinghua.password}")
     private String password;
-    @Value("${rabbitmq.queuename}")
+    @Value("${rabbitmq.tsinghua.queuename}")
     private String queuename;
-    @Value("${rabbitmq.skipqueuedeclare}")
+    @Value("${rabbitmq.tsinghua.skipqueuedeclare}")
     private String skipqueuedeclare;
 
 

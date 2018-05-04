@@ -1,4 +1,4 @@
-package com.cictec.middleware.tsinghua.entity.domain;
+package com.cictec.middleware.tsinghua.biz;
 
 import com.cictec.middleware.tsinghua.entity.dto.Terminal.PositionMessageDTO;
 import com.cictec.middleware.tsinghua.entity.po.elasticsearch.PositionInfo;
