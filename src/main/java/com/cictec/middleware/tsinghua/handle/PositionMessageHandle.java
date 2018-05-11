@@ -64,7 +64,7 @@ public class PositionMessageHandle implements MessageState {
         warn.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
         warn.setWarnTime(DateUtils.parseDate(message.getYyMMddHHmmss()));
         warn.setWarnUuid(UUIDGenerator.genUuidStr());
-        String content =  MessageFormat.format("报警类型：{},状态标识：{}",message.getAlarmSet()[0],DaxianStringUtils.join(message.getStatusSet()));
+        String content =  "报警类型："+message.getAlarmSet()[0]+",状态标识："+DaxianStringUtils.join(message.getStatusSet());
         warn.setWarnContent(content);
         //类型后期待定
         //warn.setWarnType();

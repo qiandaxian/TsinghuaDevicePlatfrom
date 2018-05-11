@@ -82,6 +82,8 @@ public class MediaMessageHandle implements MessageState {
         tWarnMedia.setMediaType(messageDTO.getMediaType());
         tWarnMedia.setDownloadStatus(TWarnMedia.DOWNLOAD_STATUS_UNDOWNLOAD);
         tWarnMedia.setSaveType(saveModel);
+        String savePath = getSavePathString(messageDTO);
+        tWarnMedia.setSavePath(savePath);
         return tWarnMedia;
     }
 
@@ -90,9 +92,13 @@ public class MediaMessageHandle implements MessageState {
         httpDownloadDTO.setMediaUuid(tWarnMedia.getMediaUuid());
         httpDownloadDTO.setSaveModel(saveModel);
         httpDownloadDTO.setUrl(messageDTO.getMediaUrl());
-        String savePath = DateUtils.getDate()+"/"+messageDTO.getHexDevIdno()+"/"+UUIDGenerator.genUuidStr()+"."+messageDTO.getMediaEncoding();
+        String savePath = getSavePathString(messageDTO);
         httpDownloadDTO.setSavePath(savePath);
         return httpDownloadDTO;
+    }
+
+    private String getSavePathString(MediaMessageDTO messageDTO) {
+        return DateUtils.getDate()+"/"+messageDTO.getHexDevIdno()+"/"+UUIDGenerator.genUuidStr()+"."+messageDTO.getMediaEncoding();
     }
 
     private String createHttpDownlodDsl(){

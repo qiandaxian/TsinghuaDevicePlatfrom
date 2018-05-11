@@ -4,7 +4,7 @@ import com.cictec.middleware.tsinghua.config.Service;
 
 
 /**
- * Created by daxian on 2018/05/03.
+ * Created by daxian on 2018/05/07.
  */
 public interface TWarnMediaService extends Service<TWarnMedia> {
 

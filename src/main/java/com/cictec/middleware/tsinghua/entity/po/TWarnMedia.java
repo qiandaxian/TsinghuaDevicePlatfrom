@@ -8,7 +8,6 @@ public class TWarnMedia {
     public static final int DOWNLOAD_STATUS_SUCCESS = 1;
     public static final int DOWNLOAD_STATUS_ERROR = 2;
     public static final int DOWNLOAD_STATUS_UNDOWNLOAD = 0;
-
     /**
      * 报警图片表主键uuid
      */
@@ -48,6 +47,9 @@ public class TWarnMedia {
 
     @Column(name = "save_type")
     private String saveType;
+
+    @Column(name = "save_path")
+    private String savePath;
 
     /**
      * 获取报警图片表主键uuid
@@ -199,5 +201,19 @@ public class TWarnMedia {
      */
     public void setSaveType(String saveType) {
         this.saveType = saveType;
+    }
+
+    /**
+     * @return save_path
+     */
+    public String getSavePath() {
+        return savePath;
+    }
+
+    /**
+     * @param savePath
+     */
+    public void setSavePath(String savePath) {
+        this.savePath = savePath;
     }
 }

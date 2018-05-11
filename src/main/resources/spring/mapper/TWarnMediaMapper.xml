@@ -15,5 +15,6 @@
     <result column="hex_media_id" jdbcType="VARCHAR" property="hexMediaId" />
     <result column="hex_localtion_buf" jdbcType="VARCHAR" property="hexLocaltionBuf" />
     <result column="save_type" jdbcType="VARCHAR" property="saveType" />
+    <result column="save_path" jdbcType="VARCHAR" property="savePath" />
   </resultMap>
 </mapper>

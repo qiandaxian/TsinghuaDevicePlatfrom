@@ -33,7 +33,7 @@ public class HttpDownloadResponseRabbitMqProcessor extends BaseProcessor {
     public void doProcess(Message message) throws Exception {
         byte[] bytes = (byte[]) message.getBody();
 
-        logger.debug("收到消息：{}",new String(bytes,"UTF-8"));
+        logger.info("收到消息：{}",new String(bytes,"UTF-8"));
         HttpDownloadResponseDTO messageDTO = JSONObject.parseObject(bytes,HttpDownloadResponseDTO.class);
 
         TWarnMedia warnMedia = converHttpDownloadResponseDTOToWarnMedia(messageDTO);
