@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -19,4 +21,23 @@ public class TDeviceServiceImpl extends AbstractService<TDevice> implements TDev
     @Resource
     private TDeviceMapper tDeviceMapper;
 
+    @Override
+    public List<TDevice> findAllOnlineByLineUuid(Map<String, Object> param) {
+        return tDeviceMapper.findAllOnlineByLineUuid(param);
+    }
+
+    @Override
+    public List<TDevice> findAllDevice() {
+        return tDeviceMapper.findAllDevice();
+    }
+
+    @Override
+    public void allDeviceOffline() {
+        tDeviceMapper.allDeviceOffline();
+    }
+
+    @Override
+    public TDevice findByDevCode(String id) {
+        return tDeviceMapper.findByDevCode(id);
+    }
 }

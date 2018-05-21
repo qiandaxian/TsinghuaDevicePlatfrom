@@ -33,4 +33,55 @@
     <result column="protocol" jdbcType="VARCHAR" property="protocol" />
     <result column="operational_type" jdbcType="VARCHAR" property="operationalType" />
   </resultMap>
+
+  <select id="findByDevCode" resultMap="BaseResultMap" parameterType="String">
+        SELECT
+			t2.*
+		FROM
+			t_device t2
+		WHERE
+			1 = 1
+		and t2.dev_drop_flag='0'
+        and t2.dev_code=#{_parameter}
+    </select>
+
+
+  <select id="findAllDevice" resultMap="BaseResultMap" >
+        	SELECT
+			t2.*
+		FROM
+			t_bus t1
+		left join t_device t2 on t1.bus_dev_uuid=t2.dev_uuid
+		WHERE
+			1 = 1
+		and t2.dev_drop_flag='0'
+		and t1.bus_drop_flag='0'
+    </select>
+
+
+  <select id="findAllOnlineByLineUuid" parameterType="Map" resultMap="BaseResultMap">
+    SELECT
+    t2.*
+    FROM
+    t_bus t1
+    left join t_device t2 on t1.bus_dev_uuid=t2.dev_uuid
+    WHERE
+    1 = 1
+    and t2.dev_drop_flag='0'
+    and t1.bus_drop_flag='0'
+    <if test="lineUuid != null and lineUuid != ''">
+      AND t1.bus_line_uuid = #{lineUuid}
+    </if>
+    <if test="devOnlineStatus != null and devOnlineStatus != ''">
+      and t2.dev_online_status=#{devOnlineStatus}
+    </if>
+  </select>
+
+  <update id="allDeviceOffline" >
+        UPDATE
+        t_device
+        SET
+        dev_online_status = 0
+    </update>
+
 </mapper>
