@@ -36,7 +36,7 @@ public class MinaConfig {
 	@Value("${mina.maxRead.size}")
 	private Integer maxReadSize;
 
-	@Value("${port.vehicle.device}")
+	@Value("${mina.tcp.port}")
 	private String port;
 	
 	@Autowired
