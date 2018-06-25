@@ -15,4 +15,20 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="hex_location_buf" jdbcType="VARCHAR" property="hexLocationBuf" />
   </resultMap>
+
+  <select id="getWarnByDevCodeAndHexLocationBuf" resultMap="BaseResultMap" parameterType="Map" >
+    select t1.*
+    from
+    t_warn t1
+    where
+    1=1
+    <if test="devCode != null and devCode != ''">
+    and t1.device_code = #{devCode}
+    </if>
+    <if test="hexLocationBuf != null and hexLocationBuf != ''">
+    and t1.hex_location_buf = #{hexLocationBuf}
+    </if>
+
+  </select>
+
 </mapper>

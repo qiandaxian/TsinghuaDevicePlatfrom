@@ -3,10 +3,12 @@ package com.cictec.middleware.tsinghua.handle;
 import com.alibaba.fastjson.JSONObject;
 import com.cictec.middleware.tsinghua.dao.elasticsearch.PositionInfoReponsitory;
 import com.cictec.middleware.tsinghua.entity.dto.Terminal.PositionMessageDTO;
+import com.cictec.middleware.tsinghua.entity.po.TDevice;
 import com.cictec.middleware.tsinghua.entity.po.TWarn;
 import com.cictec.middleware.tsinghua.entity.po.elasticsearch.PositionInfo;
 import com.cictec.middleware.tsinghua.handle.state.MessageState;
 import com.cictec.middleware.tsinghua.biz.VirtualSessionManage;
+import com.cictec.middleware.tsinghua.service.TDeviceService;
 import com.cictec.middleware.tsinghua.service.TWarnService;
 import com.cictec.middleware.tsinghua.utils.DateUtils;
 import com.cictec.middleware.tsinghua.utils.DaxianStringUtils;
@@ -35,6 +37,9 @@ public class PositionMessageHandle implements MessageState {
     private PositionInfoReponsitory positionInfoReponsitory;
     @Autowired
     private TWarnService tWarnService;
+    @Autowired
+    private TDeviceService deviceService;
+
     @Override
     public void messageHandle(byte[] bytes) {
         PositionMessageDTO positionMessage = JSONObject.parseObject(bytes,PositionMessageDTO.class);
@@ -60,14 +65,20 @@ public class PositionMessageHandle implements MessageState {
     private TWarn getWarnFromPosition(PositionMessageDTO message){
         TWarn warn = new TWarn();
         warn.setDeviceCode(message.getHexDevIdno());
+        TDevice device = deviceService.findByDevCode(message.getHexDevIdno());
+        if(device!=null){
+            warn.setDeviceId(device.getDevUuid());
+        }
+
         warn.setCreateTime(new Date(System.currentTimeMillis()));
         warn.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
         warn.setWarnTime(DateUtils.parseDate(message.getYyMMddHHmmss()));
         warn.setWarnUuid(UUIDGenerator.genUuidStr());
         String content =  "报警类型："+message.getAlarmSet()[0]+",状态标识："+DaxianStringUtils.join(message.getStatusSet());
         warn.setWarnContent(content);
-        //类型后期待定
-        //warn.setWarnType();
+        warn.setLat(message.getLat());
+        warn.setLng(message.getLng());
+
         return warn;
     }
 

@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class HttpDownloadDTO {
     private String url;
     private String savePath;
-    private String saveModel;
+    private short saveModel;
     private String mediaUuid;
 }

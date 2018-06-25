@@ -27,9 +27,9 @@ public class MessageStateContext implements ApplicationContextAware {
     }
     public void messageHandle(TsinghuaDeviceMessageDTO messageDTO,byte[] bytes) {
         this.setMessageState(messageDTO);
-        messageState.messageHandle(bytes);
-
-
+        if(messageState != null){
+            messageState.messageHandle(bytes);
+        }
     }
 
     public void setMessageState(TsinghuaDeviceMessageDTO messageDTO){

@@ -2,8 +2,11 @@ package com.cictec.middleware.tsinghua.biz;
 
 import com.cictec.middleware.tsinghua.entity.dto.Terminal.PositionMessageDTO;
 import com.cictec.middleware.tsinghua.entity.dto.TsinghuaDeviceMessageDTO;
+import com.cictec.middleware.tsinghua.entity.po.TDevice;
+import com.cictec.middleware.tsinghua.service.TDeviceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,6 +30,9 @@ public class VirtualSessionManage {
     @Value("${virtualsession.efficacy.time}")
     private Integer efficacyTime;
 
+    @Autowired
+    private TDeviceService deviceService;
+
     Logger logger = LoggerFactory.getLogger(VirtualSessionManage.class);
 
     /**
@@ -40,6 +46,28 @@ public class VirtualSessionManage {
         virtualSession.setLastReceiveMessageTime(new Date(System.currentTimeMillis()));
         sessions.put(message.getHexDevIdno(),virtualSession);
         logger.info("设备【{}】新建连接。",message.getHexDevIdno());
+
+        TDevice device = deviceService.findByDevCode(message.getHexDevIdno());
+        device.setDevOnlineStatus(TDevice.DEVICE_ON_LINE);
+        deviceService.update(device);
+        logger.info("设备【{}】更新在线状态：在线！。",message.getHexDevIdno());
+
+
+        return virtualSession;
+    }
+
+    public VirtualSession createSession(TsinghuaDeviceMessageDTO message,TDevice device){
+        VirtualSession virtualSession = new VirtualSession();
+        virtualSession.setCreateTime(new Date(System.currentTimeMillis()));
+        virtualSession.setDevCode(message.getHexDevIdno());
+        virtualSession.setLastReceiveMessageTime(new Date(System.currentTimeMillis()));
+        sessions.put(message.getHexDevIdno(),virtualSession);
+        logger.info("设备【{}】新建连接。",message.getHexDevIdno());
+
+        device.setDevOnlineStatus(TDevice.DEVICE_ON_LINE);
+        deviceService.update(device);
+        logger.info("设备【{}】更新在线状态：在线！。",message.getHexDevIdno());
+
         return virtualSession;
     }
 
@@ -51,7 +79,11 @@ public class VirtualSessionManage {
     public void closeSession(String devCode){
         if(sessions.get(devCode)!=null) {
             sessions.remove(devCode);
-            logger.info("设备【{}】连接超时，断开连接。", devCode);
+            TDevice device = deviceService.findByDevCode(devCode);
+            device.setDevOnlineStatus(TDevice.DEVICE_ON_LINE);
+            deviceService.update(device);
+            logger.info("设备【{}】连接超时，断开连接。更新在线状态：离线！", devCode);
+
         }
     }
 

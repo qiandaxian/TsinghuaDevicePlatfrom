@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 
 /**
@@ -19,4 +20,8 @@ public class TWarnServiceImpl extends AbstractService<TWarn> implements TWarnSer
     @Resource
     private TWarnMapper tWarnMapper;
 
+    @Override
+    public TWarn getWarnByDevCodeAndHexLocationBuf(Map paramMap) {
+        return    tWarnMapper.getWarnByDevCodeAndHexLocationBuf(paramMap);
+    }
 }

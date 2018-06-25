@@ -53,6 +53,15 @@ public class TWarn {
     @Column(name = "hex_location_buf")
     private String hexLocationBuf;
 
+    @Column(name = "lat")
+    private String lat;
+
+    @Column(name = "lng")
+    private String lng;
+
+
+
+
     /**
      * 获取报警信息主键uuid
      *
@@ -201,5 +210,21 @@ public class TWarn {
      */
     public void setHexLocationBuf(String hexLocationBuf) {
         this.hexLocationBuf = hexLocationBuf;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }

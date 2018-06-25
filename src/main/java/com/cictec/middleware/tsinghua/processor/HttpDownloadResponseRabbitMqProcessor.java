@@ -44,7 +44,7 @@ public class HttpDownloadResponseRabbitMqProcessor extends BaseProcessor {
 
     private TWarnMedia converHttpDownloadResponseDTOToWarnMedia(HttpDownloadResponseDTO responseDTO){
         TWarnMedia tWarnMedia = new TWarnMedia();
-        tWarnMedia.setDownloadStatus(responseDTO.getDownloadStatus());
+        tWarnMedia.setDownloadType(responseDTO.getDownloadStatus());
         tWarnMedia.setDownloadTime(responseDTO.getDownloadTime());
         tWarnMedia.setMediaUuid(responseDTO.getMediaUuid());
         tWarnMedia.setDownloadUrl(responseDTO.getDownloadUrl());
