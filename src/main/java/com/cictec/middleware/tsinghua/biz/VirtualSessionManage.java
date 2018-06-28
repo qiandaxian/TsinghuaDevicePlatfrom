@@ -80,7 +80,7 @@ public class VirtualSessionManage {
         if(sessions.get(devCode)!=null) {
             sessions.remove(devCode);
             TDevice device = deviceService.findByDevCode(devCode);
-            device.setDevOnlineStatus(TDevice.DEVICE_ON_LINE);
+            device.setDevOnlineStatus(TDevice.DEVICE_OFF_LINE);
             deviceService.update(device);
             logger.info("设备【{}】连接超时，断开连接。更新在线状态：离线！", devCode);
 

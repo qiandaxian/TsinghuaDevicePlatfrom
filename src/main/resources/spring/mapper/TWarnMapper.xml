@@ -8,7 +8,7 @@
     <id column="warn_uuid" jdbcType="VARCHAR" property="warnUuid" />
     <result column="device_id" jdbcType="VARCHAR" property="deviceId" />
     <result column="device_code" jdbcType="VARCHAR" property="deviceCode" />
-    <result column="warn_type" jdbcType="INTEGER" property="warnType" />
+    <result column="warn_type" jdbcType="VARCHAR" property="warnType" />
     <result column="warn_time" jdbcType="TIMESTAMP" property="warnTime" />
     <result column="warn_id" jdbcType="VARCHAR" property="warnId" />
     <result column="warn_content" jdbcType="VARCHAR" property="warnContent" />

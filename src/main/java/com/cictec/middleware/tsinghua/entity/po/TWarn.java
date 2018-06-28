@@ -27,7 +27,7 @@ public class TWarn {
      * 报警类型
      */
     @Column(name = "warn_type")
-    private Integer warnType;
+    private String warnType;
 
     /**
      * 报警时间
@@ -112,21 +112,11 @@ public class TWarn {
         this.deviceCode = deviceCode;
     }
 
-    /**
-     * 获取报警类型
-     *
-     * @return warn_type - 报警类型
-     */
-    public Integer getWarnType() {
+    public String getWarnType() {
         return warnType;
     }
 
-    /**
-     * 设置报警类型
-     *
-     * @param warnType 报警类型
-     */
-    public void setWarnType(Integer warnType) {
+    public void setWarnType(String warnType) {
         this.warnType = warnType;
     }
 

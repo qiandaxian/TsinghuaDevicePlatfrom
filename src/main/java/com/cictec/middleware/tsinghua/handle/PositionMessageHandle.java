@@ -69,7 +69,7 @@ public class PositionMessageHandle implements MessageState {
         if(device!=null){
             warn.setDeviceId(device.getDevUuid());
         }
-
+        warn.setWarnType(message.getAlarmSet()[0]);
         warn.setCreateTime(new Date(System.currentTimeMillis()));
         warn.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
         warn.setWarnTime(DateUtils.parseDate(message.getYyMMddHHmmss()));
