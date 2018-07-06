@@ -90,7 +90,7 @@ public class PositionMessageHandle implements MessageState {
     private PositionInfo converPositionMessageToPositionInfo(PositionMessageDTO message){
         PositionInfo positionInfo = new PositionInfo();
         positionInfo.setUuid(UUIDGenerator.genUuidStr());
-        positionInfo.setLat(message.getHexDevIdno());
+        positionInfo.setLat(message.getLat());
         positionInfo.setLng(message.getLng());
         positionInfo.setAlarmSetStr(StringUtils.arrayToDelimitedString(message.getAlarmSet(),","));
         positionInfo.setAltitude(message.getAltitude().toString());
@@ -102,6 +102,8 @@ public class PositionMessageHandle implements MessageState {
         positionInfo.setStatusSetStr(StringUtils.arrayToDelimitedString(message.getStatusSet(),","));
         //hexLocationBuf在不同设备间，会出现重复的情况，为了当做唯一编码使用，所有加上设备号
         positionInfo.setHexLocationBuf(message.getHexDevIdno()+message.getHexLocationBuf());
+        positionInfo.setSaveTime(System.currentTimeMillis()+"");
+
         return positionInfo;
     }
 }

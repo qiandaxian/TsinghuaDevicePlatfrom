@@ -32,4 +32,6 @@ public class PositionInfo {
     private String mile;
 
     private String altitude;
+
+    private String saveTime;
 }
