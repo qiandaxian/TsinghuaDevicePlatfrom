@@ -25,6 +25,10 @@ import java.util.concurrent.ConcurrentMap;
 @Component
 @EnableScheduling
 public class VirtualSessionManage {
+
+    /**
+     *后期用redis做session状态的共享
+     */
     private ConcurrentMap<String,VirtualSession> sessions = new ConcurrentHashMap();
 
     @Value("${virtualsession.efficacy.time}")
